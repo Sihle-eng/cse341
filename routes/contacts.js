@@ -7,28 +7,26 @@ router.get('/', async (req, res) => {
   const uri = process.env.MONGODB_URI;
   
   if (!uri) {
-    console.error('MONGODB_URI is not defined');
-    return res.status(500).json({ error: 'Database configuration error' });
+    console.error('MONGODB_URI not defined');
+    return res.status(500).json({ error: 'MONGODB_URI not defined' });
   }
   
-  console.log('Connecting to MongoDB...');
-  console.log('URI (first 50 chars):', uri.substring(0, 50));
-  
-  // Force IPv4
   const client = new MongoClient(uri, {
-    serverSelectionTimeoutMS: 10000,
-    family: 4
+    family: 4,
+    serverSelectionTimeoutMS: 30000,
+    useUnifiedTopology: true
   });
   
   try {
+    console.log('Fetching all contacts...');
     await client.connect();
-    console.log('✅ Connected to MongoDB successfully!');
+    console.log('Connected to MongoDB');
     
     const db = client.db('contacts_db');
     const collection = db.collection('contacts');
     
     const contacts = await collection.find({}).toArray();
-    console.log(`📁 Found ${contacts.length} contacts`);
+    console.log(`Found ${contacts.length} contacts`);
     
     const formattedContacts = contacts.map(contact => ({
       ...contact,
@@ -37,14 +35,10 @@ router.get('/', async (req, res) => {
     
     res.status(200).json(formattedContacts);
   } catch (error) {
-    console.error('❌ Database error:', error.message);
-    res.status(500).json({ 
-      error: 'Failed to fetch contacts', 
-      message: error.message 
-    });
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
   } finally {
     await client.close();
-    console.log('Connection closed');
   }
 });
 
@@ -53,16 +47,20 @@ router.get('/:id', async (req, res) => {
   const uri = process.env.MONGODB_URI;
   
   if (!uri) {
-    return res.status(500).json({ error: 'Database configuration error' });
+    return res.status(500).json({ error: 'MONGODB_URI not defined' });
   }
   
-  const client = new MongoClient(uri, { family: 4 });
+  const client = new MongoClient(uri, {
+    family: 4,
+    useUnifiedTopology: true
+  });
   
   try {
     const { id } = req.params;
+    console.log(`Fetching contact with ID: ${id}`);
     
     if (!ObjectId.isValid(id)) {
-      return res.status(400).json({ error: 'Invalid ID format. Must be 24 characters.' });
+      return res.status(400).json({ error: 'Invalid ID format' });
     }
     
     await client.connect();
