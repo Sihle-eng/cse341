@@ -1,28 +1,37 @@
+
+const dns = require('node:dns');
+dns.setDefaultResultOrder('ipv4first');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 const express = require('express');
-const { MongoClient } = require('mongodb');
+const cors = require('cors');
+require('dotenv').config();
+
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
-const uri = "mongodb+srv://Sihle:7640@cluster0.ramgrbf.mongodb.net/?appName=Cluster0";
-const client = new MongoClient(uri);
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/api/data', async (req, res) => {
-  try {
-    await client.connect();
-    const db = client.db("myDatabase"); // replace with your DB name
-    const collection = db.collection("myCollection"); // replace with your collection name
+// Routes - using your contacts router
+const contactsRouters = require('./routes/contacts');
+app.use('/contacts', contactsRouters);
 
-    const data = await collection.find({}).toArray(); // get all documents
-    res.json(data);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error fetching data");
-  } finally {
-    await client.close();
-  }
+// Root route
+app.get('/', (req, res) => {
+  res.json({ 
+    message: "Contacts API is running!",
+    endpoints: {
+      getAllContacts: "GET /contacts",
+      getOneContact: "GET /contacts/:id"
+    }
+  });
 });
 
+// Start server (NO database connection here - that's handled in the model)
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

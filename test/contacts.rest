@@ -1,0 +1,11 @@
+### Get all contacts
+GET http://localhost:8080/contacts
+
+### Get a single contact by ID (replace YOUR_CONTACT_ID with an actual ID from your database)
+GET http://localhost:8080/contacts/YOUR_CONTACT_ID
+
+### Test the deployed Render URL (replace with your actual Render URL)
+GET https://your-app-name.onrender.com/contacts
+
+### Get single contact from Render
+GET https://your-app-name.onrender.com/contacts/YOUR_CONTACT_ID
