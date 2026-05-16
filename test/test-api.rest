@@ -1,10 +1,10 @@
 ### GET all contacts
 GET http://localhost:8080/contacts
 
-### GET single contact
-GET http://localhost:8080/contacts/CONTACT_ID_HERE
+### GET single contact (John Smith)
+GET http://localhost:8080/contacts/6a08a91e118eef7b54a3d839
 
-### POST create contact
+### POST new contact
 POST http://localhost:8080/contacts
 Content-Type: application/json
 
@@ -17,13 +17,13 @@ Content-Type: application/json
 }
 
 ### PUT update contact
-PUT http://localhost:8080/contacts/CONTACT_ID_HERE
+PUT http://localhost:8080/contacts/6a08a91e118eef7b54a3d839
 Content-Type: application/json
 
 {
-    "firstName": "Jane Updated",
+    "firstName": "Johnathan",
     "favoriteColor": "Purple"
 }
 
 ### DELETE contact
-DELETE http://localhost:8080/contacts/CONTACT_ID_HERE
+DELETE http://localhost:8080/contacts/6a08a91e118eef7b54a3d839

@@ -78,6 +78,8 @@
     "side-channel-weakmap": "^1.0.2",
     "sparse-bitfield": "^3.0.3",
     "statuses": "^2.0.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "toidentifier": "^1.0.1",
     "tr46": "^5.1.1",
     "type-is": "^2.0.1",
@@ -90,7 +92,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\""
   },
   "repository": {
     "type": "git",
@@ -103,5 +108,14 @@
   "bugs": {
     "url": "https://github.com/Sihle-eng/cse341/issues"
   },
-  "homepage": "https://github.com/Sihle-eng/cse341#readme"
+  "homepage": "https://github.com/Sihle-eng/cse341#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.3"
+  }
 }

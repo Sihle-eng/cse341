@@ -19,7 +19,7 @@ async function addContacts() {
   try {
     console.log('Connecting to MongoDB...');
     await client.connect();
-    console.log('✅ Connected to MongoDB');
+    console.log('Connected to MongoDB');
     
     const db = client.db('contacts_db');
     const collection = db.collection('contacts');
@@ -51,15 +51,15 @@ async function addContacts() {
     
     // Clear existing contacts
     const deleteResult = await collection.deleteMany({});
-    console.log(`🗑️  Cleared ${deleteResult.deletedCount} existing contacts`);
+    console.log(`  Cleared ${deleteResult.deletedCount} existing contacts`);
     
     // Insert new contacts
     const insertResult = await collection.insertMany(contacts);
-    console.log(`✅ Added ${insertResult.insertedCount} contacts`);
+    console.log(` Added ${insertResult.insertedCount} contacts`);
     
     // Show all contacts
     const allContacts = await collection.find({}).toArray();
-    console.log('\n📋 Your contacts:');
+    console.log('\n Your contacts:');
     allContacts.forEach(contact => {
       console.log(`   ${contact.firstName} ${contact.lastName}`);
       console.log(`   ID: ${contact._id}`);
