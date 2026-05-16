@@ -7,11 +7,15 @@ const options = {
       title: 'Contacts API Documentation',
       version: '1.0.0',
       description: 'REST API for managing contacts - CSE 341 Project',
+      contact: {
+        name: 'Your Name',
+        email: 'your.email@byui.edu'
+      }
     },
     servers: [
       {
-        url: 'http://localhost:8080',
-        description: 'Local development server',
+        url: process.env.RENDER_URL || 'http://localhost:8080',
+        description: process.env.RENDER_URL ? 'Production Server' : 'Development Server',
       },
     ],
   },

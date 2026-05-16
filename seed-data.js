@@ -40,7 +40,7 @@ async function seed() {
         
         // Insert samples
         const result = await collection.insertMany(sampleContacts);
-        console.log(`✅ Added ${result.insertedCount} contacts`);
+        console.log(` Added ${result.insertedCount} contacts`);
         
         // Verify
         const contacts = await collection.find({}).toArray();
